@@ -8,12 +8,14 @@ import java.util.Date;
 import java.util.List;
 
 import com.mastercloudapps.airport.dto.AvionRevisionMecanicoDTO;
+import com.mastercloudapps.airport.dto.ComunidadAutonomaNProvinciasDTO;
 import com.mastercloudapps.airport.dto.TripulanteCiudadFechaDTO;
 import com.mastercloudapps.airport.dto.TripulanteTiempoVueloAcumuladosDTO;
 import com.mastercloudapps.airport.dto.VueloCiudadFechaDTO;
 import com.mastercloudapps.airport.entity.Aeropuerto;
 import com.mastercloudapps.airport.entity.Avion;
 import com.mastercloudapps.airport.entity.Mecanico;
+import com.mastercloudapps.airport.entity.Provincia;
 import com.mastercloudapps.airport.entity.Revision;
 import com.mastercloudapps.airport.entity.Tripulante;
 import com.mastercloudapps.airport.entity.Vuelo;
@@ -21,6 +23,7 @@ import com.mastercloudapps.airport.entity.VueloTripulante;
 import com.mastercloudapps.airport.repository.AeropuertoRepository;
 import com.mastercloudapps.airport.repository.AvionRepository;
 import com.mastercloudapps.airport.repository.MecanicoRepository;
+import com.mastercloudapps.airport.repository.ProvinciaRepository;
 import com.mastercloudapps.airport.repository.RevisionRepository;
 import com.mastercloudapps.airport.repository.TripulanteRepository;
 import com.mastercloudapps.airport.repository.VueloRepository;
@@ -50,6 +53,9 @@ public class DatabaseLoader implements CommandLineRunner {
     @Autowired
     VueloRepository vueloRepository;
 
+    @Autowired
+    ProvinciaRepository provinciaRepository;
+
     @Override
     public void run(String... args) {
 
@@ -61,7 +67,11 @@ public class DatabaseLoader implements CommandLineRunner {
         List<Aeropuerto> aeropuertos = aeropuertoRepository.findAll();
         List<Vuelo> vuelos = vueloRepository.findAll();
         List<Revision> revisiones = revisionRepository.findAll();
+        List<Provincia> provincias = provinciaRepository.findAll();
+        List<ComunidadAutonomaNProvinciasDTO> casNumeroProvincias = provinciaRepository.findAllCAsAndCountProvinces();
 
+        // --- Relational (MySQL) database info ---
+        
         muestraDatos("Mecanicos: ", mecanicos);
         muestraDatos("Tripulantes: ", tripulantes);
         muestraDatos("Aviones: ", aviones);
@@ -82,17 +92,11 @@ public class DatabaseLoader implements CommandLineRunner {
         this.muestraTripulantesCiudadHoraDespegue();
         this.muestraTripulantesTiempoVuelosAcumulados();
 
-    }
+        // --- Non-relational (Mongo) database info ---
 
-    private void muestraTripulantesCiudadHoraDespegue() {
-        List<Tripulante> tripulantes = this.tripulanteRepository.findAll();
-        List<TripulanteCiudadFechaDTO> tripulantesCiudadFecha = tripulanteRepository.findTripulanteByCodEmpleado(tripulantes.get(0).getCodEmpleado());
-        muestraDatos("Tripulantes con ciudades de despegue y fecha: ", tripulantesCiudadFecha);
-    }
+        muestraDatos("Provincias y todos sus datos: ", provincias);
+        muestraDatos("Comunidades autónomas y número de provincias: ", casNumeroProvincias);
 
-    private void muestraTripulantesTiempoVuelosAcumulados() {
-        List<TripulanteTiempoVueloAcumuladosDTO> tripulantesTiempoVuelosAcumulados = tripulanteRepository.findTripulanteTiempoVuelosAcumulados();
-        muestraDatos("Tripulantes con tiempo y vuelos acumulados: ", tripulantesTiempoVuelosAcumulados);
     }
 
     private static void muestraDatos(String title, List datos) {
@@ -100,6 +104,7 @@ public class DatabaseLoader implements CommandLineRunner {
         System.out.println(title + "\n\n");
         for (Object p : datos) {
             System.out.println(p);
+            System.out.println();
         }
         System.out.println("--------");
     }
@@ -112,5 +117,16 @@ public class DatabaseLoader implements CommandLineRunner {
     private void muestraMecanicosAviones() {
         List<AvionRevisionMecanicoDTO> mecanicosAviones = avionRepository.findAllAvionesByMecanicosAndRevisiones();
         muestraDatos("Nombre de mecanicos que han revisado cada avion: ", mecanicosAviones);
+    }
+
+    private void muestraTripulantesCiudadHoraDespegue() {
+        List<Tripulante> tripulantes = this.tripulanteRepository.findAll();
+        List<TripulanteCiudadFechaDTO> tripulantesCiudadFecha = tripulanteRepository.findTripulanteByCodEmpleado(tripulantes.get(0).getCodEmpleado());
+        muestraDatos("Tripulantes con ciudades de despegue y fecha: ", tripulantesCiudadFecha);
+    }
+
+    private void muestraTripulantesTiempoVuelosAcumulados() {
+        List<TripulanteTiempoVueloAcumuladosDTO> tripulantesTiempoVuelosAcumulados = tripulanteRepository.findTripulanteTiempoVuelosAcumulados();
+        muestraDatos("Tripulantes con tiempo y vuelos acumulados: ", tripulantesTiempoVuelosAcumulados);
     }
 }
