@@ -12,10 +12,6 @@ CREATE TABLE `aeropuerto` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-LOCK TABLES `aeropuerto` WRITE;
-INSERT INTO `aeropuerto` VALUES (3,'Madrid','AAA','Adolfo Suárez','España'),(4,'Las Palmas','BBB','LPA','España'),(5,'Nueva York','CCC','JFK','USA');
-UNLOCK TABLES;
-
 DROP TABLE IF EXISTS `avion`;
 
 CREATE TABLE `avion` (
@@ -27,19 +23,11 @@ CREATE TABLE `avion` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-LOCK TABLES `avion` WRITE;
-INSERT INTO `avion` VALUES (1,'Airbus',1500,'00000AAA','775'),(2,'Boeing',856.5,'1111BBB','737');
-UNLOCK TABLES;
-
 DROP TABLE IF EXISTS `hibernate_sequence`;
 
 CREATE TABLE `hibernate_sequence` (
   `next_val` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-LOCK TABLES `hibernate_sequence` WRITE;
-INSERT INTO `hibernate_sequence` VALUES (11);
-UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `mecanico`;
 
@@ -52,10 +40,6 @@ CREATE TABLE `mecanico` (
   `formacion_previa` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`cod_empleado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-LOCK TABLES `mecanico` WRITE;
-INSERT INTO `mecanico` VALUES ('40288105779b079d01779b07abf50000','El de los palotes','Airbus','Pepito','2021','Universidad de la calle'),('40288105779b079d01779b07ac2c0001','De la Vega','Airbus','Juanito','2020','FP2');
-UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `revision`;
 
@@ -78,10 +62,6 @@ CREATE TABLE `revision` (
   CONSTRAINT `FKepufjqvypljnk6si1dhtdcn3r` FOREIGN KEY (`avion_id`) REFERENCES `avion` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-LOCK TABLES `revision` WRITE;
-INSERT INTO `revision` VALUES (8,'Comprobación de flaps del avión','2021-01-12 10:55:07.214000','2021-01-11 10:55:07.214000',2,'Reparacion',3,1,'40288105779b079d01779b07abf50000'),(9,'Ajuste de turbina','2021-01-12 10:55:07.214000','2021-01-11 10:55:07.214000',3,'Reparacion',3,1,'40288105779b079d01779b07ac2c0001'),(10,'Revision de ruedas','2021-01-12 10:55:07.214000','2021-01-11 10:55:07.214000',1,'Revision',4,2,'40288105779b079d01779b07ac2c0001');
-UNLOCK TABLES;
-
 DROP TABLE IF EXISTS `tripulante`;
 
 CREATE TABLE `tripulante` (
@@ -93,10 +73,6 @@ CREATE TABLE `tripulante` (
   `puesto` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`cod_empleado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
-LOCK TABLES `tripulante` WRITE;
-INSERT INTO `tripulante` VALUES ('40288105779b079d01779b07ae010002','Me lavo','Airbus','Jony','Pagada por papa','Capitan del mundo'),('40288105779b079d01779b07ae4b0003','Jhonensen','Iberia','Johnson','Curso de azafato','Azafato');
-UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `vuelo`;
 
@@ -118,10 +94,6 @@ CREATE TABLE `vuelo` (
   CONSTRAINT `FKnvtlv125kssq8a3dt0bdrm1lm` FOREIGN KEY (`destino_id`) REFERENCES `aeropuerto` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-LOCK TABLES `vuelo` WRITE;
-INSERT INTO `vuelo` VALUES (6,'IB3343','Iberia',2.5,'2021-02-13 09:31:47.214000',1,4,3),(7,'UX3345','Air Europa',9,'2021-02-13 08:41:47.214000',2,5,3);
-UNLOCK TABLES;
-
 DROP TABLE IF EXISTS `vuelo_tripulante`;
 
 CREATE TABLE `vuelo_tripulante` (
@@ -133,6 +105,13 @@ CREATE TABLE `vuelo_tripulante` (
   CONSTRAINT `FKkafyo5jljj8pptv8xly7vdxv` FOREIGN KEY (`tripulante_cod_empleado`) REFERENCES `tripulante` (`cod_empleado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
-LOCK TABLES `vuelo_tripulante` WRITE;
+--- Example data
+
+INSERT INTO `hibernate_sequence` VALUES (11);
+INSERT INTO `aeropuerto` VALUES (3,'Madrid','AAA','Adolfo Suárez','España'),(4,'Las Palmas','BBB','LPA','España'),(5,'Nueva York','CCC','JFK','USA');
+INSERT INTO `avion` VALUES (1,'Airbus',1500,'00000AAA','775'),(2,'Boeing',856.5,'1111BBB','737');
+INSERT INTO `mecanico` VALUES ('40288105779b079d01779b07abf50000','El de los palotes','Airbus','Pepito','2021','Universidad de la calle'),('40288105779b079d01779b07ac2c0001','De la Vega','Airbus','Juanito','2020','FP2');
+INSERT INTO `revision` VALUES (8,'Comprobación de flaps del avión','2021-01-12 10:55:07.214000','2021-01-11 10:55:07.214000',2,'Reparacion',3,1,'40288105779b079d01779b07abf50000'),(9,'Ajuste de turbina','2021-01-12 10:55:07.214000','2021-01-11 10:55:07.214000',3,'Reparacion',3,1,'40288105779b079d01779b07ac2c0001'),(10,'Revision de ruedas','2021-01-12 10:55:07.214000','2021-01-11 10:55:07.214000',1,'Revision',4,2,'40288105779b079d01779b07ac2c0001');
+INSERT INTO `tripulante` VALUES ('40288105779b079d01779b07ae010002','Me lavo','Airbus','Jony','Pagada por papa','Capitan del mundo'),('40288105779b079d01779b07ae4b0003','Jhonensen','Iberia','Johnson','Curso de azafato','Azafato');
+INSERT INTO `vuelo` VALUES (6,'IB3343','Iberia',2.5,'2021-02-13 09:31:47.214000',1,4,3),(7,'UX3345','Air Europa',9,'2021-02-13 08:41:47.214000',2,5,3);
 INSERT INTO `vuelo_tripulante` VALUES ('40288105779b079d01779b07ae010002',6),('40288105779b079d01779b07ae4b0003',7);
-UNLOCK TABLES;
