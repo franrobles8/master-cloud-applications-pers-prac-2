@@ -1,0 +1,16 @@
+package com.mastercloudapps.airport.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class TripulanteTiempoVueloAcumuladosDTO {
+    
+    private String nombre;
+    private String apellidos;
+    private Long vuelos;
+    private Double horas;
+}
