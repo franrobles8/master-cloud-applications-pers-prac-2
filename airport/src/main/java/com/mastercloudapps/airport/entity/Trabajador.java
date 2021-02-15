@@ -1,5 +1,6 @@
 package com.mastercloudapps.airport.entity;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -23,6 +24,7 @@ public class Trabajador {
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @Column(name="cod_empleado")
     private String codEmpleado;
     
     private String nombre;

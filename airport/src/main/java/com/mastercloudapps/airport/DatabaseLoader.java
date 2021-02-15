@@ -97,6 +97,19 @@ public class DatabaseLoader implements CommandLineRunner {
         muestraDatos("Provincias y todos sus datos: ", provincias);
         muestraDatos("Comunidades autónomas y número de provincias: ", casNumeroProvincias);
 
+        this.muestraMecanicosAvionesJson();
+        this.muestraTripulantesTiempoVuelosAcumuladosJson();
+
+    }
+
+    private void muestraTripulantesTiempoVuelosAcumuladosJson() {
+        List<TripulanteTiempoVueloAcumuladosDTO> tripulantesTiempoVuelosAcumulados = tripulanteRepository.findTripulanteTiempoVuelosAcumuladosJson();
+        muestraDatos("Tripulantes con tiempo y vuelos acumulados recogidos de json: ", tripulantesTiempoVuelosAcumulados);
+    }
+
+    private void muestraMecanicosAvionesJson() {
+        List<AvionRevisionMecanicoDTO> mecanicosAviones = avionRepository.findAllAvionesByMecanicosAndRevisionesJson();
+        muestraDatos("Nombre de mecanicos que han revisado cada avion recogidos de json: ", mecanicosAviones);
     }
 
     private static void muestraDatos(String title, List datos) {

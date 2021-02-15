@@ -22,4 +22,13 @@ public interface TripulanteRepository extends JpaRepository<Tripulante, String> 
                    "GROUP BY t.nombre, t.apellidos")
     List<TripulanteTiempoVueloAcumuladosDTO> findTripulanteTiempoVuelosAcumulados();
 
+    @Query("SELECT new com.mastercloudapps.airport.dto.TripulanteTiempoVueloAcumuladosDTO("
+       + "t.nombre,t.apellidos, COUNT(v.id), SUM(v.duracion))"
+    		+ " FROM Tripulante t"
+    		+ " JOIN Vuelo v ON FUNCTION("
+    			+ "'JSON_CONTAINS',"
+    			+ " FUNCTION('JSON_EXTRACT', v.tripulantesId ,'$[*].cod_empleado'),"
+    			+ " CONVERT(t.codEmpleado, JSON)) = 1"
+    		+ " GROUP BY t.nombre, t.apellidos")
+    List<TripulanteTiempoVueloAcumuladosDTO> findTripulanteTiempoVuelosAcumuladosJson();
 }
