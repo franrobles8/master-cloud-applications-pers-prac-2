@@ -2,8 +2,6 @@ package com.mastercloudapps.airport;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +17,6 @@ import com.mastercloudapps.airport.entity.Provincia;
 import com.mastercloudapps.airport.entity.Revision;
 import com.mastercloudapps.airport.entity.Tripulante;
 import com.mastercloudapps.airport.entity.Vuelo;
-import com.mastercloudapps.airport.entity.VueloTripulante;
 import com.mastercloudapps.airport.repository.AeropuertoRepository;
 import com.mastercloudapps.airport.repository.AvionRepository;
 import com.mastercloudapps.airport.repository.MecanicoRepository;
@@ -112,7 +109,7 @@ public class DatabaseLoader implements CommandLineRunner {
         muestraDatos("Nombre de mecanicos que han revisado cada avion recogidos de json: ", mecanicosAviones);
     }
 
-    private static void muestraDatos(String title, List datos) {
+    private static void muestraDatos(String title, List<?> datos) {
         System.out.println("\n\n\n--------");
         System.out.println(title + "\n\n");
         for (Object p : datos) {
