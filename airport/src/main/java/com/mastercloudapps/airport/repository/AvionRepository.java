@@ -17,12 +17,12 @@ public interface AvionRepository extends JpaRepository<Avion, Long> {
     List<AvionRevisionMecanicoDTO> findAllAvionesByMecanicosAndRevisiones();
 
     @Query("SELECT new com.mastercloudapps.airport.dto.AvionRevisionMecanicoDTO(" 
-			+ "a.matricula, m.nombre, m.apellidos)" 
+			+ "a.id, m.nombre, m.apellidos)" 
 			+ "FROM Mecanico m "
 			+ "JOIN Avion a ON FUNCTION("
 				+ "'JSON_CONTAINS',"
-				+ "FUNCTION('JSON_EXTRACT', a.jsonRevisiones, '$[*].cod_empleado'),"
-				+ "CONVERT(m.codEmpleado, JSON)) = 1")
+				+ "FUNCTION('JSON_EXTRACT', a.jsonRevisiones, '$[*].mecanico'),"
+				+ "CONVERT(m.id, JSON)) = 1")
     List<AvionRevisionMecanicoDTO> findAllAvionesByMecanicosAndRevisionesJson();
 
 }

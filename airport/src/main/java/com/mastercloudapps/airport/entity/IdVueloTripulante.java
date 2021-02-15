@@ -20,5 +20,5 @@ public class IdVueloTripulante implements Serializable {
     private static final long serialVersionUID = -6526090005137283576L;
     
     private Long vuelo;
-    private String tripulante;
+    private Long tripulante;
 }

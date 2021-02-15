@@ -29,6 +29,6 @@ public class VueloTripulante {
     public VueloTripulante(Vuelo vuelo, Tripulante tripulante) {
         this.vuelo = vuelo;
         this.tripulante = tripulante;
-        this.id = new IdVueloTripulante(vuelo.getId(), tripulante.getCodEmpleado());
+        this.id = new IdVueloTripulante(vuelo.getId(), tripulante.getId());
     }
 }

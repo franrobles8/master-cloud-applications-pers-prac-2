@@ -28,7 +28,7 @@ public interface TripulanteRepository extends JpaRepository<Tripulante, String> 
     		+ " JOIN Vuelo v ON FUNCTION("
     			+ "'JSON_CONTAINS',"
     			+ " FUNCTION('JSON_EXTRACT', v.tripulantesId ,'$[*].cod_empleado'),"
-    			+ " CONVERT(t.codEmpleado, JSON)) = 1"
+    			+ " CONVERT(t.id, JSON)) = 1"
     		+ " GROUP BY t.nombre, t.apellidos")
     List<TripulanteTiempoVueloAcumuladosDTO> findTripulanteTiempoVuelosAcumuladosJson();
 }

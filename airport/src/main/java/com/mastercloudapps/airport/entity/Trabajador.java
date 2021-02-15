@@ -1,11 +1,8 @@
 package com.mastercloudapps.airport.entity;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-
-import org.hibernate.annotations.GenericGenerator;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,9 +19,9 @@ import lombok.experimental.SuperBuilder;
 public class Trabajador {
 
     @Id
-    @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
-    @Column(name="cod_empleado")
+    private long id;
+    
+    @Column(name="cod_empleado",unique = true)
     private String codEmpleado;
     
     private String nombre;
